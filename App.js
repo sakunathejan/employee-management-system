@@ -1,12 +1,27 @@
 const API_BASE_URL = 'https://api.freeprojectapi.com';
 
+const selectEmployeeDepartment = document.getElementById("departmentId");
+
+function loadDepartments() {
+  fetch(${API_BASE_URL}/api/EmployeeApp/GetDepartments)
+    .then(res => res.json())
+    .then(data => {
+      let options = '<option value="">-- Select Department --</option>';
+      data.forEach(element => {
+        options += <option value=""></option>;
+      });
+      if (selectEmployeeDepartment) {
+        selectEmployeeDepartment.innerHTML = options;
+      }
+    });
+}
+
 function loadEmployees() {
   fetch(${API_BASE_URL}/api/EmployeeApp/GetEmployees)
     .then(res => res.json())
     .then(data => {
       let tblItems = document.getElementById("employeeTableBody");
       let tblBody = "";
-
       data.forEach(element => {
         tblBody += 
           <tr class="hover:bg-gray-50 transition-colors">
@@ -21,9 +36,9 @@ function loadEmployees() {
           </tr>
         ;
       });
-
       tblItems.innerHTML = tblBody;
     });
 }
 
+loadDepartments();
 loadEmployees();
