@@ -1,6 +1,13 @@
 const API_BASE_URL = 'https://api.freeprojectapi.com';
 
 const selectEmployeeDepartment = document.getElementById("departmentId");
+const selectEmployeeDesignation = document.getElementById("designationId");
+
+if (selectEmployeeDepartment) {
+  selectEmployeeDepartment.addEventListener("change", function () {
+    loadDesignations(selectEmployeeDepartment.value);
+  });
+}
 
 function loadDepartments() {
   fetch(${API_BASE_URL}/api/EmployeeApp/GetDepartments)
@@ -10,9 +17,19 @@ function loadDepartments() {
       data.forEach(element => {
         options += <option value=""></option>;
       });
-      if (selectEmployeeDepartment) {
-        selectEmployeeDepartment.innerHTML = options;
-      }
+      selectEmployeeDepartment.innerHTML = options;
+    });
+}
+
+function loadDesignations(deptId) {
+  fetch(${API_BASE_URL}/api/EmployeeApp/GetDesignationsByDeptId?deptId=)
+    .then(res => res.json())
+    .then(data => {
+      let options = '<option value="">-- Select Designation --</option>';
+      data.forEach(element => {
+        options += <option value=""></option>;
+      });
+      selectEmployeeDesignation.innerHTML = options;
     });
 }
 
