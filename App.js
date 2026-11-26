@@ -138,18 +138,26 @@ function updateEmployee() {
     departmentId: Number(departmentId),
     designationId: Number(designationId),
     employeeType: employeeType,
-    dateOfJoining: dateOfJoining,
+    dateOfJoining: dateOfJoining ? new Date(dateOfJoining).toISOString() : "",
     salary: Number(salary)
   };
 
-  fetch(`${API_BASE_URL}/api/EmployeeApp/UpdateEmployee`, {
+  fetch(`${API_BASE_URL}/api/EmployeeApp/UpdateEmployee?id=${employeeId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json"
     },
     body: JSON.stringify(employee)
   })
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) {
+        return res.json().then(err => { 
+          console.error("Update error details:", err); 
+          throw err; 
+        });
+      }
+      return res.json();
+    })
     .then(data => {
       console.log(data);
       alert("Employee Updated!");
