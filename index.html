@@ -4,9 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Employee Management System</title>
+  <!-- Tailwind CSS CDN for beginner-friendly styling -->
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 min-h-screen text-gray-800 font-sans">
+
+  <!-- ================= NAVBAR ================= -->
   <header class="bg-blue-600 text-white shadow-md">
     <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-2">
       <div>
@@ -18,56 +21,243 @@
       </div>
     </div>
   </header>
+
+  <!-- ================= MAIN CONTAINER ================= -->
   <main class="max-w-7xl mx-auto px-4 py-6 space-y-6">
+
+    <!-- EMPLOYEE FORM (CREATE / UPDATE) -->
     <section class="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
       <div class="border-b pb-3 mb-4 flex justify-between items-center">
         <h2 class="text-lg font-semibold text-gray-800 flex items-center gap-2">
-          <span>??</span> Employee Details Form
+          <span>👤</span> Employee Details Form
         </h2>
+        <span class="text-xs text-gray-400">Fill details to save/update</span>
       </div>
-      <form id="employeeForm" class="space-y-4">
-        <input type="hidden" id="employeeId" value="0">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div class="sm:col-span-2">
-            <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
-            <input type="text" id="fullName" placeholder="e.g. John Doe" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required>
+
+        <form id="employeeForm" class="space-y-4">
+          <!-- Hidden input for selected Employee ID (useful during edit/update) -->
+          <input type="hidden" id="employeeId" value="0">
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <!-- Full Name -->
+            <div class="sm:col-span-2">
+              <label for="fullName" class="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
+              <input 
+                type="text" 
+                id="fullName" 
+                placeholder="e.g. Priyanka Kamble" 
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              >
+            </div>
+
+            <!-- Email -->
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
+              <input 
+                type="email" 
+                id="email" 
+                placeholder="priyankbluly@gmail.com" 
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              >
+            </div>
+
+            <!-- Phone Number -->
+            <div>
+              <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
+              <input 
+                type="tel" 
+                id="phone" 
+                placeholder="e.g. 8765435678" 
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              >
+            </div>
+
+            <!-- Gender -->
+            <div>
+              <label for="gender" class="block text-sm font-medium text-gray-700 mb-1">Gender *</label>
+              <select 
+                id="gender" 
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              >
+                <option value="">-- Select Gender --</option>
+                <option value="female">Female</option>
+                <option value="Male">Male</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <!-- Department Lookup Dropdown -->
+            <div>
+              <label for="departmentId" class="block text-sm font-medium text-gray-700 mb-1">Department (Lookup) *</label>
+              <select 
+                id="departmentId" 
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              >
+                <option value="">-- Select Department --</option>
+              </select>
+            </div>
+
+            <!-- Designation Lookup Dropdown (Cascaded by Department) -->
+            <div>
+              <label for="designationId" class="block text-sm font-medium text-gray-700 mb-1">Designation (Lookup) *</label>
+              <select 
+                id="designationId" 
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              >
+                <option value="">-- Select Department First --</option>
+              </select>
+            </div>
+
+            <!-- Employee Type -->
+            <div>
+              <label for="employeeType" class="block text-sm font-medium text-gray-700 mb-1">Employee Type *</label>
+              <select 
+                id="employeeType" 
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              >
+                <option value="Permanent">Permanent</option>
+                <option value="Contract">Contract</option>
+                <option value="Part-Time">Part-Time</option>
+                <option value="Intern">Intern</option>
+              </select>
+            </div>
+
+            <!-- Date of Joining -->
+            <div>
+              <label for="dateOfJoining" class="block text-sm font-medium text-gray-700 mb-1">Date of Joining *</label>
+              <input 
+                type="date" 
+                id="dateOfJoining" 
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              >
+            </div>
+
+            <!-- Salary -->
+            <div>
+              <label for="salary" class="block text-sm font-medium text-gray-700 mb-1">Salary *</label>
+              <input 
+                type="number" 
+                id="salary" 
+                placeholder="e.g. 78888" 
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              >
+            </div>
           </div>
-          <div>
-            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address *</label>
-            <input type="email" id="email" placeholder="john@company.com" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required>
+
+          <!-- Form Action Buttons -->
+          <div class="pt-3 border-t flex flex-wrap gap-3">
+            <button 
+              type="submit" 
+              id="btnSaveEmployee" 
+              class="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium text-sm rounded-lg transition-colors shadow-sm"
+              >
+              Add Employee
+            </button>
+            <button 
+              type="button" 
+              id="btnUpdateEmployee" 
+              class="hidden px-5 py-2 bg-green-600 hover:bg-green-700 text-white font-medium text-sm rounded-lg transition-colors shadow-sm"
+            >
+              Update Employee
+            </button>
+            <button 
+              type="reset" 
+              id="btnResetForm" 
+              class="px-5 py-2 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium text-sm rounded-lg transition-colors"
+            >
+              Clear
+            </button>
           </div>
-          <div>
-            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
-            <input type="tel" id="phone" placeholder="e.g. 0771234567" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" required>
-          </div>
-        </div>
-        <div class="pt-3 border-t flex flex-wrap gap-3">
-          <button type="submit" id="btnSaveEmployee" class="px-5 py-2 bg-blue-600 text-white font-medium text-sm rounded-lg">Add Employee</button>
-          <button type="reset" id="btnResetForm" class="px-5 py-2 bg-gray-200 text-gray-700 font-medium text-sm rounded-lg">Clear</button>
-        </div>
-      </form>
-    </section>
+        </form>
+      </section>
+
+    <!-- ================= EMPLOYEE LIST / CRUD TABLE ================= -->
     <section class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-      <div class="p-4 border-b border-gray-200 flex justify-between items-center">
-        <h2 class="text-lg font-semibold text-gray-800">Employee Directory</h2>
+      
+      <!-- Table Header & Controls (Search & Filter) -->
+      <div class="p-4 border-b border-gray-200 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h2 class="text-lg font-semibold text-gray-800">Employee Directory</h2>
+          <p class="text-xs text-gray-500">Manage employee records (Read, Update, Delete)</p>
+        </div>
+
+        <!-- Filter & Search Controls -->
+        <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
+          <!-- Search input -->
+          <input 
+            type="text" 
+            id="searchEmployeeInput" 
+            placeholder="Search by name, email..." 
+            class="px-3 py-1.5 border border-gray-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-blue-500 w-full sm:w-48"
+          >
+
+          <!-- Department Filter -->
+          <select 
+            id="filterDepartment" 
+            class="px-3 py-1.5 border border-gray-300 rounded-lg text-xs bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">All Departments</option>
+            <option value="IT">IT</option>
+            <option value="HR">HR</option>
+            <option value="Finance">Finance</option>
+            <option value="Marketing">Marketing</option>
+          </select>
+
+          <!-- Designation Filter -->
+          <select 
+            id="filterDesignation" 
+            class="px-3 py-1.5 border border-gray-300 rounded-lg text-xs bg-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <!-- Designation Lookup -->
+          </select>
+        </div>
       </div>
+
+      <!-- Employee Table -->
       <div class="overflow-x-auto">
         <table class="w-full text-left border-collapse text-sm">
-          <thead class="bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-600 uppercase">
+          <thead class="bg-gray-50 border-b border-gray-200 text-xs font-semibold text-gray-600 uppercase tracking-wider">
             <tr>
               <th class="py-3 px-3"># ID</th>
               <th class="py-3 px-3">Name</th>
               <th class="py-3 px-3">Email</th>
               <th class="py-3 px-3">Phone</th>
+              <th class="py-3 px-3">Gender</th>
+              <th class="py-3 px-3">Department</th>
+              <th class="py-3 px-3">Designation</th>
+              <th class="py-3 px-3">Type</th>
+              <th class="py-3 px-3">Joining Date</th>
+              <th class="py-3 px-3">Salary</th>
               <th class="py-3 px-3 text-center">Actions</th>
             </tr>
           </thead>
           <tbody id="employeeTableBody" class="divide-y divide-gray-100 text-gray-700">
+            <!-- Employee Table -->
           </tbody>
         </table>
       </div>
+
+      <!-- Table Footer / Count -->
+      <div class="p-3 bg-gray-50 border-t border-gray-200 text-xs text-gray-500 flex justify-between items-center">
+        <span>Showing records in directory</span>
+        <span id="employeeCountBadge" class="font-medium text-gray-700">Total Employees: 2</span>
+      </div>
+
     </section>
+
   </main>
+
+  <!-- ================= JAVASCRIPT CONNECTION ================= -->
+  <!-- Connected to App.js where you can code all your CRUD functions -->
   <script src="App.js"></script>
 </body>
 </html>
